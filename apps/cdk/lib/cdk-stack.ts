@@ -12,6 +12,13 @@ export class CdkStack extends cdk.Stack {
       billingMode: BillingMode.PAY_PER_REQUEST,
     });
 
+    const orderTable = new Table(this, "UserOrdersTable", {
+      partitionKey: { name: "Username", type: AttributeType.STRING },
+      sortKey: { name: "OrderId", type: AttributeType.STRING },
+      billingMode: BillingMode.PAY_PER_REQUEST,
+    });
+
     new cdk.CfnOutput(this, "TableNameOutput", { value: table.tableName });
+    new cdk.CfnOutput(this, "OrdersTableName", { value: orderTable.tableName });
   }
 }

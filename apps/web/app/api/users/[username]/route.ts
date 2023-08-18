@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { ddbDocClient } from "../../../../lib/dynamodbClient";
+import { ddbDocClient } from "db";
 import { DeleteCommand, GetCommand } from "@aws-sdk/lib-dynamodb";
 
 export async function GET(

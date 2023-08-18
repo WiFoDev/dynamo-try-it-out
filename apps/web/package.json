@@ -6,11 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed:db": "tsx ./utils/seed.ts"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.391.0",
     "@aws-sdk/lib-dynamodb": "^3.391.0",
+    "db": "workspace:*",
     "next": "^13.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -22,6 +24,7 @@
     "@types/react-dom": "^18.0.7",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
+    "tsx": "^3.12.7",
     "typescript": "^4.5.3"
   }
 }

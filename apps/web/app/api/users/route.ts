@@ -1,8 +1,6 @@
 import { PutCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
-import { NextApiRequest } from "next";
-import { NextRequest, NextResponse } from "next/server";
-import { ddbDocClient } from "../../../lib/dynamodbClient";
-import { UpdateItemCommand } from "@aws-sdk/client-dynamodb";
+import { NextResponse } from "next/server";
+import { ddbDocClient } from "db";
 
 interface CreateUserDTO {
   username: string;
@@ -18,13 +16,11 @@ export async function POST(req: Request) {
     TableName: process.env.USERS_TABLE_NAME,
     Item: {
       Username: body.username,
-      Age: 25,
-      Name: "John Doe",
     },
-    // ExpressionAttributeNames: {
-    //   "#u": "Username",
-    // },
-    // ConditionExpression: "attribute_not_exists(#u)",
+    ExpressionAttributeNames: {
+      "#u": "Username",
+    },
+    ConditionExpression: "attribute_not_exists(#u)",
   });
   try {
     await ddbDocClient.send(command);

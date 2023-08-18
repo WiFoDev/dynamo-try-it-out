@@ -2,13 +2,15 @@
   "private": true,
   "scripts": {
     "build": "turbo run build --filter=web",
-    "dev": "turbo run dev --filter=web",
+    "dev": "dotenv -- turbo run dev --filter=web",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "cdk:deploy": "turbo run deploy --filter=dynamo-try-it-out-cdk"
+    "cdk:deploy": "turbo run deploy --filter=dynamo-try-it-out-cdk",
+    "seed:db": "dotenv -- turbo run seed:db --filter=web"
   },
   "devDependencies": {
     "@turbo/gen": "^1.9.7",
+    "dotenv-cli": "^7.3.0",
     "eslint": "^7.32.0",
     "eslint-config-custom": "workspace:*",
     "prettier": "^2.5.1",
