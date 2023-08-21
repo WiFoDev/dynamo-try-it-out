@@ -12,6 +12,7 @@ const seedDB = async () => {
             Username: { S: "alexdebrie" },
             OrderId: { S: "20160630-12928" },
             Amount: { N: "142.23" },
+            ReturnDate: { S: "20160705" },
           },
         },
       },
@@ -21,6 +22,7 @@ const seedDB = async () => {
             Username: { S: "daffyduck" },
             OrderId: { S: "20170608-10171" },
             Amount: { N: "18.95" },
+            ReturnDate: { S: "20170628" },
           },
         },
       },
@@ -30,9 +32,11 @@ const seedDB = async () => {
             Username: { S: "daffyduck" },
             OrderId: { S: "20170609-25875" },
             Amount: { N: "116.86" },
+            ReturnDate: { S: "20170628" },
           },
         },
       },
+
       {
         PutRequest: {
           Item: {
@@ -48,6 +52,7 @@ const seedDB = async () => {
             Username: { S: "yosemitesam" },
             OrderId: { S: "20170609-18618" },
             Amount: { N: "122.45" },
+            ReturnDate: { S: "20170615" },
           },
         },
       },

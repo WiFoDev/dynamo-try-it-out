@@ -14,11 +14,6 @@ export class CdkStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const table = new Table(this, "UsersTable", {
-      partitionKey: { name: "Username", type: AttributeType.STRING },
-      billingMode: BillingMode.PAY_PER_REQUEST,
-    });
-
     const orderTable = new Table(this, "UserOrdersTable", {
       partitionKey: { name: "Username", type: AttributeType.STRING },
       sortKey: { name: "OrderId", type: AttributeType.STRING },
@@ -34,7 +29,18 @@ export class CdkStack extends cdk.Stack {
       projectionType: ProjectionType.KEYS_ONLY,
     });
 
-    new cdk.CfnOutput(this, "TableNameOutput", { value: table.tableName });
+    orderTable.addGlobalSecondaryIndex({
+      indexName: "ReturnDataeOrderIdIndex",
+      partitionKey: {
+        name: "ReturnDate",
+        type: AttributeType.STRING,
+      },
+      sortKey: {
+        name: "OrderId",
+        type: AttributeType.STRING,
+      },
+    });
+
     new cdk.CfnOutput(this, "OrdersTableName", { value: orderTable.tableName });
   }
 }
