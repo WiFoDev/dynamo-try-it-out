@@ -1,5 +1,12 @@
 import * as cdk from "aws-cdk-lib";
-import { AttributeType, BillingMode, Table } from "aws-cdk-lib/aws-dynamodb";
+import {
+  AttributeType,
+  BillingMode,
+  LocalSecondaryIndexProps,
+  Table,
+  CfnGlobalTable,
+  ProjectionType,
+} from "aws-cdk-lib/aws-dynamodb";
 import { Construct } from "constructs";
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
@@ -16,6 +23,15 @@ export class CdkStack extends cdk.Stack {
       partitionKey: { name: "Username", type: AttributeType.STRING },
       sortKey: { name: "OrderId", type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
+    });
+
+    orderTable.addLocalSecondaryIndex({
+      indexName: "UserAmountIndex",
+      sortKey: {
+        name: "Amount",
+        type: AttributeType.NUMBER,
+      },
+      projectionType: ProjectionType.KEYS_ONLY,
     });
 
     new cdk.CfnOutput(this, "TableNameOutput", { value: table.tableName });

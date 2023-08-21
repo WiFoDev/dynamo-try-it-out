@@ -4,45 +4,20 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request, { params: { username } }) {
   try {
-    // const command = new QueryCommand({
-    //   TableName: process.env.USER_ORDERS_TABLE_NAME,
-    //   ExpressionAttributeNames: {
-    //     "#u": "Username",
-    //     "#o": "OrderId",
-    //     "#a": "Amount",
-    //   },
-    //   ExpressionAttributeValues: {
-    //     ":u": {
-    //       S: username,
-    //     },
-    //     ":startDate": {
-    //       S: "20170101",
-    //     },
-    //     ":endDate": {
-    //       S: "20180101",
-    //     },
-    //   },
-    //   KeyConditionExpression: "#u = :u AND #o BETWEEN :startDate AND :endDate",
-    //   ProjectionExpression: "#a",
-    // });
     const command = new QueryCommand({
       TableName: process.env.USER_ORDERS_TABLE_NAME,
-      KeyConditionExpression: "#username = :username AND begins_with(#o,:o)",
-      FilterExpression: "#amount > :amount",
+      IndexName: "UserAmountIndex",
+      KeyConditionExpression: "#u = :u AND #a > :a",
       ExpressionAttributeNames: {
-        "#username": "Username",
-        "#amount": "Amount",
-        "#o": "OrderId",
+        "#u": "Username",
+        "#a": "Amount",
       },
       ExpressionAttributeValues: {
-        ":username": {
+        ":u": {
           S: username,
         },
-        ":amount": {
+        ":a": {
           N: "100",
-        },
-        ":o": {
-          S: "20170609",
         },
       },
     });
